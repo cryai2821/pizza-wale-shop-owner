@@ -1,7 +1,6 @@
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { base44 } from '@/lib/api'
 
 interface User {
   id: string;

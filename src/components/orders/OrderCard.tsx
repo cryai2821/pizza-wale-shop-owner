@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn, formatCurrency } from '@/lib/utils';
 import { Order } from '@/types';
-import { Clock, User, ChevronDown, ChevronUp, Phone, MapPin } from 'lucide-react';
+import { Clock, User, ChevronDown, ChevronUp, Phone } from 'lucide-react';
 
 interface OrderCardProps {
     order: Order;
