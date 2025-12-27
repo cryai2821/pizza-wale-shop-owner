@@ -15,6 +15,8 @@ import axios from 'axios';
 import { Product } from './ProductCard';
 import { useAuthStore } from '@/store/authStore';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Simple Modal since Dialog is missing
 const Modal = ({ isOpen, onClose, title, children }: any) => {
     if (!isOpen) return null;
@@ -60,7 +62,7 @@ export default function ProductForm({ pizza, shopId, isOpen, onClose, onSave }: 
             try {
                 // Use admin endpoint for consistency
                 const res = await axios.get(
-                    `http://localhost:5000/shops/${shopId}/admin/menu`,
+                    `${API_URL}/shops/${shopId}/admin/menu`,
                     { headers: { Authorization: `Bearer ${token}` } } // Assuming token is available... wait, token is used later in handleCreateCategory. Check scope.
                 );
                 if (res.data && res.data.length > 0) return res.data as { id: string; name: string }[];
@@ -103,7 +105,7 @@ export default function ProductForm({ pizza, shopId, isOpen, onClose, onSave }: 
         setIsCreatingCategory(true);
         try {
             const res = await axios.post(
-                `http://localhost:5000/shops/${shopId}/category`,
+                `${API_URL}/shops/${shopId}/category`,
                 { name: newCategoryName },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -141,7 +143,7 @@ export default function ProductForm({ pizza, shopId, isOpen, onClose, onSave }: 
         try {
             // 2. Get Presigned URL
             const { data: presignedData } = await axios.post(
-                'http://localhost:5000/uploads/presigned-url',
+                `${API_URL}/uploads/presigned-url`,
                 {
                     filename: file.name,
                     contentType: file.type
@@ -173,8 +175,8 @@ export default function ProductForm({ pizza, shopId, isOpen, onClose, onSave }: 
     useEffect(() => {
         if (isOpen) {
             if (pizza) {
-                const sizeGroup = pizza.optionConfigs?.find((c: any) => c.optionGroup.name === 'Size')?.optionGroup;
-                const toppingGroup = pizza.optionConfigs?.find((c: any) => c.optionGroup.name === 'Toppings')?.optionGroup;
+                const sizeGroup = pizza.optionConfigs?.find((c) => c.optionGroup.name === 'Size')?.optionGroup;
+                const toppingGroup = pizza.optionConfigs?.find((c) => c.optionGroup.name === 'Toppings')?.optionGroup;
 
                 setFormData({
                     name: pizza.name,
